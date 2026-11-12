@@ -1,5 +1,6 @@
 // Share links keep the diagram in the URL fragment, so nothing is stored on a server.
-// New links: #z=<deflate-raw, base64url>&c=<branch choices>. Old links (#src=<UTF-8, base64url>) still open.
+// Links: #z=<deflate-raw, base64url> (or #src=<UTF-8, base64url> when that is shorter or compression is
+// unavailable), plus &c=<branch choices, dot-separated>. Old #src= links still open.
 
 export interface Shared { source: string; choices: number[] }
 
@@ -33,7 +34,13 @@ async function pipe(bytes: Uint8Array, stream: CompressionStream | Decompression
 /** The fragment (without "#") for a source and its branch choices; compressed where the browser can */
 export async function encodeShare(source: string, choices: number[] = []): Promise<string> {
   const raw = new TextEncoder().encode(source);
-  const body = typeof CompressionStream === "function" ? `z=${toB64u(await pipe(raw, new CompressionStream("deflate-raw")))}` : `src=${toB64u(raw)}`;
+  let body = `src=${toB64u(raw)}`;
+  // Some browsers have CompressionStream without deflate-raw (Safari 16.4-17): keep the plain form there.
+  // Very short sources can grow when compressed, so the shorter form wins.
+  try {
+    const z = `z=${toB64u(await pipe(raw, new CompressionStream("deflate-raw")))}`;
+    if (z.length < body.length) body = z;
+  } catch { /* plain form */ }
   return choices.some((c) => c > 0) ? `${body}&c=${choices.join(".")}` : body;
 }
 
