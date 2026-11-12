@@ -4,6 +4,8 @@ The landing page, docs, examples and playground for [ene](https://github.com/slo
 
 ## Develop
 
+Requires Node 24+ (scripts are TypeScript run by Node directly) and pnpm.
+
 ```bash
 pnpm install
 pnpm dev        # http://localhost:5173
@@ -33,3 +35,10 @@ To change a token: edit it in the design system, copy its `tokens.json` over `de
 ## Updating the player
 
 `pnpm sync:player` copies `demo/ene.js`, `demo/ene-elk.js` and `demo/logos-subset.js` from a sibling checkout of `slop-makers/ene` (or `ENE_DIR=...`). Examples are copied from `packages/core/examples`.
+
+## Toolchain
+
+Everything is TypeScript: routes, components, `vite.config.ts` and the `scripts/*.ts` that Node runs directly.
+Dependencies are on their latest releases (SvelteKit 3, Svelte 5, Vite 8) except TypeScript, which is pinned to 6.0: SvelteKit 3 declares `typescript ^6` as its peer and relies on the JavaScript compiler API that TypeScript 7 no longer ships.
+
+`pnpm check` type-checks the app (svelte-check) and the scripts (tsc).

@@ -4,24 +4,29 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "sync:tokens": "node scripts/sync-tokens.mjs",
-    "sync:player": "node scripts/sync-player.mjs",
+    "sync:tokens": "node scripts/sync-tokens.ts",
+    "sync:player": "node scripts/sync-player.ts",
     "dev": "vite dev",
-    "build": "node scripts/sync-tokens.mjs && vite build",
+    "build": "node scripts/sync-tokens.ts && vite build",
     "preview": "vite preview",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && tsc --noEmit -p tsconfig.scripts.json"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^4.0.1",
     "@sveltejs/kit": "^3.2.0",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/node": "^26.6.6",
     "svelte": "^5.57.3",
     "svelte-check": "^4.7.8",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vite": "^8.3.8"
   },
   "imports": {
-    "#lib/*": "./src/lib/*",
-    "#lib/*.ts": "./src/lib/*.ts"
+    "#lib/components/*": "./src/lib/components/*",
+    "#lib/styles/*": "./src/lib/styles/*",
+    "#lib/*": "./src/lib/*.ts"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }
