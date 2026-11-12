@@ -73,7 +73,7 @@
 </section>
 
 <style>
-  .hero { position: relative; padding-top: var(--space-30); padding-bottom: var(--space-18); display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-6); }
+  .hero { position: relative; overflow-x: clip; padding-top: var(--space-30); padding-bottom: var(--space-18); display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-6); }
   .hero::before { content: ""; position: absolute; inset: 0 0 auto 50%; width: 900px; height: 600px; transform: translateX(-50%); background: radial-gradient(50% 50% at 50% 40%, rgba(124,140,255,.12), rgba(124,140,255,0) 70%); pointer-events: none; z-index: -1; animation: drift 12s var(--motion-ease) infinite alternate; }
   @keyframes drift { to { transform: translateX(-46%) translateY(24px); } }
   .badge { font-size: 13px; color: var(--accent-soft); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: var(--space-1) var(--space-4); transition: border-color var(--motion-fast); }
