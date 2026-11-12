@@ -1,9 +1,9 @@
 import { error } from "@sveltejs/kit";
-import { examples, byId } from "#lib/examples";
+import { examples, getExamples } from "#lib/examples";
 export const entries = () => examples.map((e) => ({ id: e.slug }));
 export const load = ({ params }) => {
-  const ex = byId(params.id);
-  if (!ex) error(404, "Not found");
-  const i = examples.indexOf(ex);
-  return { ex, prev: examples[i - 1] ?? null, next: examples[i + 1] ?? null };
+  const all = getExamples();
+  const i = all.findIndex((e) => e.id === params.id || e.slug === params.id);
+  if (i < 0) error(404, "Not found");
+  return { ex: all[i], prev: all[i - 1] ?? null, next: all[i + 1] ?? null };
 };

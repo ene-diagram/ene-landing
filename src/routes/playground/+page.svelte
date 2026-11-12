@@ -1,11 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { examples, byId } from "#lib/examples";
+  import { byId, getExamples } from "#lib/examples";
   import EnePlayer from "#lib/components/EnePlayer.svelte";
+  import { m } from "#lib/paraglide/messages";
 
   let pick = $state("07-payment-retry");
   let text = $state(byId("07")!.source);
   let shown = $state(byId("07")!.source);
+  const examples = $derived(getExamples());
   let note = $state("");
   let timer: ReturnType<typeof setTimeout>;
   const lines = $derived(text.split("\n").length);
@@ -17,7 +19,7 @@
   function decode(s: string) { const b = atob(s.replace(/-/g, "+").replace(/_/g, "/")); return new TextDecoder().decode(Uint8Array.from(b, (c) => c.charCodeAt(0))); }
   async function copy(what: "link" | "source") {
     const v = what === "link" ? `${location.origin}${location.pathname}#src=${encode(text)}` : text;
-    try { await navigator.clipboard.writeText(v); note = what === "link" ? "Link copied" : "Source copied"; } catch { note = "Copy failed. Select the text and copy it yourself."; }
+    try { await navigator.clipboard.writeText(v); note = what === "link" ? m.playground_link_copied() : m.playground_source_copied(); } catch { note = m.playground_copy_failed(); }
     setTimeout(() => (note = ""), 1800);
   }
   onMount(() => {
@@ -27,32 +29,32 @@
   });
 </script>
 
-<svelte:head><title>Playground · ene</title></svelte:head>
+<svelte:head><title>{m.playground_title()}</title></svelte:head>
 
 <div class="pg">
-  <section class="editor" aria-label="Editor">
+  <section class="editor" aria-label={m.playground_editor()}>
     <div class="bar">
-      <label for="ex">Example</label>
+      <label for="ex">{m.playground_example()}</label>
       <select id="ex" value={pick} onchange={(e) => load((e.currentTarget as HTMLSelectElement).value)}>
-        {#if !pick}<option value="">Shared link</option>{/if}
+        {#if !pick}<option value="">{m.playground_shared_link()}</option>{/if}
         {#each examples as e}<option value={e.slug}>{e.id} · {e.title}</option>{/each}
       </select>
     </div>
-    <label class="sr" for="src">Diagram source</label>
+    <label class="sr" for="src">{m.playground_source_label()}</label>
     <textarea id="src" spellcheck="false" value={text} oninput={(e) => edit((e.currentTarget as HTMLTextAreaElement).value)}></textarea>
-    <div class="status"><span><i aria-hidden="true"></i> {lines} lines · {steps} steps</span><span>Renders as you type</span></div>
+    <div class="status"><span><i aria-hidden="true"></i> {m.playground_stats({ lines, steps })}</span><span>{m.playground_live()}</span></div>
   </section>
-  <section class="view" aria-label="Player">
+  <section class="view" aria-label={m.playground_player()}>
     <div class="bar">
-      <span class="kicker">PREVIEW</span>
+      <span class="kicker">{m.playground_preview_kicker()}</span>
       <div class="acts">
         <span class="note" role="status">{note}</span>
-        <button type="button" class="ctl" onclick={() => copy("source")}>Copy source</button>
-        <button type="button" class="ctl" onclick={() => copy("link")}>Copy link</button>
+        <button type="button" class="ctl" onclick={() => copy("source")}>{m.playground_copy_source()}</button>
+        <button type="button" class="ctl" onclick={() => copy("link")}>{m.playground_copy_link()}</button>
       </div>
     </div>
-    <div class="stage"><EnePlayer source={shown} label="Playground preview" /></div>
-    <p class="hint muted">To get a self-playing SVG, save the source as a file and run <code class="ic">ene flow.ene -o flow.svg</code>.</p>
+    <div class="stage"><EnePlayer source={shown} label={m.playground_preview_label()} /></div>
+    <p class="hint muted">{@html m.playground_hint()}</p>
   </section>
 </div>
 

@@ -1,18 +1,21 @@
 <script lang="ts">
   import { href } from "#lib/href";
-  import { docs, groups } from "#lib/docs";
+  import { getDocs, getGroups } from "#lib/docs";
   import Code from "#lib/components/Code.svelte";
   import EnePlayer from "#lib/components/EnePlayer.svelte";
   import { reveal } from "#lib/reveal";
+  import { m } from "#lib/paraglide/messages";
   let { data } = $props();
   const doc = $derived(data.doc);
+  const docs = $derived(getDocs());
+  const groups = $derived(getGroups());
 </script>
 
-<svelte:head><title>{doc.title} · ene docs</title></svelte:head>
+<svelte:head><title>{m.docs_page_title({ title: doc.title })}</title></svelte:head>
 
 <div class="docs wrap">
-  <aside class="side" aria-label="Docs navigation">
-    <label class="pick"><span class="kicker">PAGE</span>
+  <aside class="side" aria-label={m.docs_nav_label()}>
+    <label class="pick"><span class="kicker">{m.docs_page_kicker()}</span>
       <select onchange={(e) => (location.href = href(`/docs/${(e.currentTarget as HTMLSelectElement).value}/`))} value={doc.slug}>
         {#each docs as d}<option value={d.slug}>{d.group} / {d.title}</option>{/each}
       </select>
@@ -49,14 +52,14 @@
         {/each}
       </section>
     {/each}
-    <nav class="pn" aria-label="Previous and next">
-      {#if data.prev}<a class="card" href={href(`/docs/${data.prev.slug}/`)}><span>← Previous</span><strong>{data.prev.title}</strong></a>{:else}<span></span>{/if}
-      {#if data.next}<a class="card r" href={href(`/docs/${data.next.slug}/`)}><span>Next →</span><strong>{data.next.title}</strong></a>{/if}
+    <nav class="pn" aria-label={m.docs_pn_label()}>
+      {#if data.prev}<a class="card" href={href(`/docs/${data.prev.slug}/`)}><span>{m.docs_previous()}</span><strong>{data.prev.title}</strong></a>{:else}<span></span>{/if}
+      {#if data.next}<a class="card r" href={href(`/docs/${data.next.slug}/`)}><span>{m.docs_next()}</span><strong>{data.next.title}</strong></a>{/if}
     </nav>
   </article>
 
-  <aside class="toc" aria-label="On this page">
-    <div class="kicker">ON THIS PAGE</div>
+  <aside class="toc" aria-label={m.docs_toc_label()}>
+    <div class="kicker">{m.docs_toc_kicker()}</div>
     {#each doc.sections as s}<a href="#{s.id}">{s.h}</a>{/each}
   </aside>
 </div>

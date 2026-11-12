@@ -25,6 +25,16 @@ Set `BASE_PATH=/ene-landing` when the site is served from a sub-path.
 | `src/routes/playground` | Editor with a live player |
 | `static/ene.js`, `ene-elk.js`, `logos-subset.js` | The ene browser player |
 
+## Languages
+
+English (default, unprefixed) and Korean (`/ko/...`), via [Paraglide JS](https://paraglidejs.com).
+
+- UI strings: `messages/en.json` and `messages/ko.json`, used as `m.key()` from `#lib/paraglide/messages`. `pnpm i18n` (also run by `pnpm check`) regenerates `src/lib/paraglide`; `pnpm build` and `pnpm dev` do it too.
+- Docs content: `src/lib/docs/en.ts` and `src/lib/docs/ko.ts` (same slugs, ids and code samples).
+- Example titles and blurbs: `ex_NN_*` keys in the messages files.
+- New locale: add it to `locales` in `project.inlang/settings.json`, add its entry to `localized` in `project.inlang/paraglide.config.ts`, create `messages/<locale>.json`, add `src/lib/docs/<locale>.ts` and register it in `src/lib/docs.ts`, and add its name to `src/lib/i18n.ts`.
+- Always build links with `href()` from `#lib/href` so they get the locale prefix and base path.
+
 ## Design tokens
 
 Colours, type, spacing, radius and shadows come from the **ene** design system.

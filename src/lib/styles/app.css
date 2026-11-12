@@ -40,3 +40,20 @@ kbd { font-size: 12px; color: var(--ink); border: 1px solid var(--line); border-
   .btn, .ctl { transition: none; }
 }
 @media (max-width: 720px) { .wrap { padding: 0 var(--space-4); } }
+
+/* Korean: Geist has no Hangul glyphs, so pair it with Pretendard and relax Latin-tuned tracking. */
+:root:lang(ko) {
+  --font-sans: "Geist", "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Pretendard Variable", Pretendard, ui-monospace, monospace;
+}
+:lang(ko) body { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
+:lang(ko) .t-display { letter-spacing: -0.02em; line-height: 1.15; }
+:lang(ko) .t-h2 { letter-spacing: -0.015em; line-height: 1.25; }
+:lang(ko) .t-h3 { letter-spacing: 0; }
+:lang(ko) .t-lede, :lang(ko) .t-body { line-height: 1.7; }
+:lang(ko) .kicker { letter-spacing: .02em; }
+:root:lang(ko) :is(h1, h2) { letter-spacing: -0.02em !important; line-height: 1.2 !important; }
+:root:lang(ko) :is(h3, h4) { letter-spacing: -0.005em !important; }
+/* Korean labels: Hangul in a mono stack looks off, so use the sans stack except for real code. */
+:root:lang(ko) :is(.kicker, .btn-mono, .ctl, .t-label, .ene-host .ene-bar, .ene-host .ene-bar button, .ene-host .ene-bar select) { font-family: "Geist", "Pretendard Variable", Pretendard, system-ui, sans-serif; letter-spacing: 0; }
+:root:lang(ko) :is(.pre, .phead, .emd, .status, .note, .callout span, th, .chip) { font-family: "Geist", "Pretendard Variable", Pretendard, system-ui, sans-serif !important; letter-spacing: 0 !important; }

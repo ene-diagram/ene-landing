@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { m } from "#lib/paraglide/messages";
   let { code, file = "", active = -1, copy = true }: { code: string; file?: string; active?: number; copy?: boolean } = $props();
   let copied = $state(false);
   const lines = $derived(code.split("\n"));
@@ -11,7 +12,7 @@
 <div class="code">
   <div class="head">
     <span>{file}</span>
-    {#if copy}<button type="button" class="ctl" onclick={doCopy}>{copied ? "Copied" : "Copy"}</button>{/if}
+    {#if copy}<button type="button" class="ctl" onclick={doCopy}>{copied ? m.code_copied() : m.code_copy()}</button>{/if}
   </div>
   <pre><code>{#each lines as l, i}<span class="ln {tone(l)}" class:on={i === active}>{l || " "}</span>{/each}</code></pre>
 </div>

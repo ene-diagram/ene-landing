@@ -2,19 +2,20 @@
   import { href } from "#lib/href";
   import Code from "#lib/components/Code.svelte";
   import EnePlayer from "#lib/components/EnePlayer.svelte";
+  import { m } from "#lib/paraglide/messages";
   let { data } = $props();
   const ex = $derived(data.ex);
 </script>
 
-<svelte:head><title>{ex.title} · ene examples</title></svelte:head>
+<svelte:head><title>{m.example_page_title({ title: ex.title })}</title></svelte:head>
 
 <div class="wrap page">
-  <a class="back" href={href(`/examples/`)}>← All examples</a>
-  <div class="head"><div><span class="kicker">EXAMPLE {ex.id}</span><h1>{ex.title}</h1><p class="muted">{ex.blurb}</p></div>
-    <a class="btn btn-primary" href={href(`/playground/#${ex.slug}`)}>Open in playground</a></div>
+  <a class="back" href={href(`/examples/`)}>{m.example_back()}</a>
+  <div class="head"><div><span class="kicker">{m.example_kicker({ id: ex.id })}</span><h1>{ex.title}</h1><p class="muted">{ex.blurb}</p></div>
+    <a class="btn btn-primary" href={href(`/playground/#${ex.slug}`)}>{m.example_open_playground()}</a></div>
   <div class="stage"><EnePlayer source={ex.source} label={ex.title} /></div>
   <Code code={ex.source} file="{ex.slug}.ene" />
-  <nav class="pn" aria-label="Previous and next example">
+  <nav class="pn" aria-label={m.example_pn_label()}>
     {#if data.prev}<a class="card" href={href(`/examples/${data.prev.slug}/`)}><span>← {data.prev.id}</span><strong>{data.prev.title}</strong></a>{:else}<span></span>{/if}
     {#if data.next}<a class="card r" href={href(`/examples/${data.next.slug}/`)}><span>{data.next.id} →</span><strong>{data.next.title}</strong></a>{/if}
   </nav>

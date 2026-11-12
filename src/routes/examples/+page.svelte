@@ -1,21 +1,24 @@
 <script lang="ts">
   import { href } from "#lib/href";
-  import { examples, type Tag } from "#lib/examples";
+  import { getExamples, tagLabels, type Tag } from "#lib/examples";
   import { reveal } from "#lib/reveal";
-  const filters: ("All" | Tag)[] = ["All", "Flows", "Branches", "Failures and retries", "Groups", "Sequence"];
-  let f = $state<"All" | Tag>("All");
-  const shown = $derived(f === "All" ? examples : examples.filter((e) => e.tags.includes(f as Tag)));
+  import { m } from "#lib/paraglide/messages";
+  const filters: ("all" | Tag)[] = ["all", "flows", "branches", "failures", "groups", "sequence"];
+  const label = (x: "all" | Tag) => (x === "all" ? m.tag_all() : tagLabels[x]());
+  let f = $state<"all" | Tag>("all");
+  const examples = $derived(getExamples());
+  const shown = $derived(f === "all" ? examples : examples.filter((e) => e.tags.includes(f as Tag)));
 </script>
 
-<svelte:head><title>Examples · ene</title></svelte:head>
+<svelte:head><title>{m.examples_title()}</title></svelte:head>
 
 <div class="wrap page">
   <div class="top">
-    <div class="t"><span class="kicker">EXAMPLES</span><h1>Fourteen flows to start from.</h1></div>
-    <p class="muted">Each one is a short <code class="ic">.ene</code> file. Open it, change a line in the playground, watch it replay.</p>
+    <div class="t"><span class="kicker">{m.examples_kicker()}</span><h1>{m.examples_h1()}</h1></div>
+    <p class="muted">{@html m.examples_p()}</p>
   </div>
-  <div class="filters" role="group" aria-label="Filter examples">
-    {#each filters as x}<button type="button" aria-pressed={f === x} onclick={() => (f = x)}>{x}</button>{/each}
+  <div class="filters" role="group" aria-label={m.examples_filter_label()}>
+    {#each filters as x}<button type="button" aria-pressed={f === x} onclick={() => (f = x)}>{label(x)}</button>{/each}
   </div>
   <div class="grid">
     {#each shown as e (e.id)}
