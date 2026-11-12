@@ -52,3 +52,7 @@ Everything is TypeScript: routes, components, `vite.config.ts` and the `scripts/
 Dependencies are on their latest releases (SvelteKit 3, Svelte 5, Vite 8) except TypeScript, which is pinned to 6.0: SvelteKit 3 declares `typescript ^6` as its peer and relies on the JavaScript compiler API that TypeScript 7 no longer ships.
 
 `pnpm check` type-checks the app (svelte-check) and the scripts (tsc).
+
+## License
+
+MIT © HelloWook. See [LICENSE](LICENSE). `static/ene-elk.js` bundles elkjs (EPL-2.0); see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
