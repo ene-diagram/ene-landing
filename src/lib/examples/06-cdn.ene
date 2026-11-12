@@ -1,0 +1,10 @@
+title CDN cache
+browser[Browser] -> edge[CDN Edge] : GET /app.js
+branch edge hit
+  edge --> browser : 200 (cached)
+else edge miss
+  edge -> origin[Origin] : GET /app.js
+  origin --> edge : 200 + Cache-Control
+  edge --> browser : 200
+end
+edge -> logs[Log Collector] : access log

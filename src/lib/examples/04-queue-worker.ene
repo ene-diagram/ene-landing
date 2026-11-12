@@ -1,0 +1,8 @@
+title Queue worker
+producer[Order Service] -> queue[SQS] : order.created
+loop 3
+  worker[Worker] -> queue : poll
+  queue --> worker : message
+  worker -> mail[Mail Server] : send confirmation
+  worker -> queue : delete
+end

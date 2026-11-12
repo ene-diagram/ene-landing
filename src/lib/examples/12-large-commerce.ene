@@ -1,0 +1,32 @@
+title Large commerce platform (28 nodes)
+web[Web] -> cdn[CDN] : static files
+app[App] -> gw[API Gateway] : request
+web -> gw : request
+gw -> auth[Auth] : verify token
+auth -> redis[Redis] : session
+gw -> user[Members] : profile
+user -> mysql[MySQL] : SELECT
+gw -> cart[Cart] : add item
+cart -> redis : save
+gw -> order[Orders] : place order
+order -> stock[Inventory] : reserve
+stock -> mysql : UPDATE
+order -> coupon[Coupons] : apply
+order -> point[Points] : deduct
+order -> pay[Payments] : authorize
+pay -> pg[PG] : authorize
+pg --> pay : approved
+pay --> order : done
+order -> kafka[Kafka] : order.created
+kafka -> ship[Shipping] : consume & kafka -> notify[Notifications] : consume & kafka -> report[Reports] : consume
+notify -> mail[Email] : send & notify -> sms[SMS] : send
+ship -> mysql : INSERT
+gw -> search[Search] : search
+search -> es[Elasticsearch] : query
+gw -> reco[Recommendations] : recommend
+reco -> es : similar items
+gw -> review[Reviews] : write review
+review -> s3[S3] : photos
+admin[Admin] -> gw : manage
+batch[Batch] -> report : aggregate
+report -> s3 : CSV

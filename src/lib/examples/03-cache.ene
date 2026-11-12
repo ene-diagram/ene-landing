@@ -1,0 +1,12 @@
+title Cache hit / miss
+client[Client] -> api[API] : GET /product/42
+api -> redis[Redis] : GET product:42
+branch cache hit
+  redis --> api : product
+else cache miss
+  redis --> api : nil
+  api -> db[MySQL] : SELECT
+  db --> api : product
+  api -> redis : SET product:42
+end
+api --> client : 200

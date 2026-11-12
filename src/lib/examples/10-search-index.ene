@@ -1,0 +1,13 @@
+title Search indexing pipeline
+app[App] -> db[MySQL] : update product
+db -> cdc[CDC Connector] : binlog
+cdc -> kafka[Kafka] : product-changed
+kafka -> indexer[Indexer] : consume
+indexer -> es[Elasticsearch] : update document
+user[User] -> search[Search API] : search
+search -> es : query
+es --> search : results
+search --> user : 200
+pin user 0,2
+pin search 3,2
+rank db cdc

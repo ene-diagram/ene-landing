@@ -1,0 +1,12 @@
+title Login and token refresh
+browser[Browser] -> auth[Auth Server] : POST /login
+auth -> users[Users DB] : verify password
+users --> auth : OK
+auth --> browser : access + refresh token
+wait 1
+browser -> api[API Server] : GET /me (expired token)
+api -x browser : 401
+browser -> auth : POST /refresh
+auth --> browser : new access token
+browser -> api : GET /me
+api --> browser : 200

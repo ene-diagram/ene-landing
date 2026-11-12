@@ -1,0 +1,9 @@
+title Upload and thumbnails
+user[User] -> api[API] : request upload URL
+api --> user : presigned URL
+user -> s3[S3] : PUT image @2s
+s3 -> lambda[Thumbnail Lambda] : ObjectCreated
+lambda -> s3 : small thumbnail
+& lambda -> s3 : large thumbnail
+& lambda -> db[DB] : save metadata
+db -> api : done

@@ -1,0 +1,10 @@
+title Order request
+speed 1.2
+
+user[User] -> api[API Server] : POST /order
+api -> cache[Redis] : check stock
+cache --> api : miss
+api -> db[MySQL] : SELECT stock & api -> pay[Payment] : charge
+db --> api : in stock
+pay -x api : timeout
+api --> user : 502 retry later

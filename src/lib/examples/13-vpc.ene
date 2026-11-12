@@ -1,0 +1,14 @@
+title Order service in a VPC
+user[User]{icon: logos:chrome, shape: circle} -> alb[ALB]{icon: logos:aws-elb} : HTTPS
+alb -> api[Order API]{icon: logos:aws-ec2} : /orders
+api -> cache[Redis]{icon: logos:redis, shape: db} : check stock
+cache --> api : hit
+api -> db[Orders DB]{icon: logos:aws-rds, shape: db, color: #f59e0b} : INSERT
+db --> api : OK
+api -> q[SQS]{icon: logos:aws-sqs, shape: queue} : order.created
+q -> worker[Worker]{icon: logos:aws-lambda} : consume
+worker -> mail[SES]{icon: logos:aws-ses} : confirmation email
+api --> user : 201
+group vpc[VPC 10.0.0.0/16]{color: #8b5cf6} : alb api cache db worker
+group pub[Public subnet]{color: #22c55e} in vpc : alb
+group priv[Private subnet]{color: #3b82f6} in vpc : api cache db worker

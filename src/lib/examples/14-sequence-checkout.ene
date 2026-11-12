@@ -1,0 +1,19 @@
+diagram sequence
+title Checkout sequence
+user[User]{icon: logos:chrome} -> api[Order API] : POST /checkout
+api -> redis[Redis]{shape: db} : check stock
+branch in stock
+  redis --> api : OK
+  api -> pg[Payment Provider] : authorize
+  branch approved
+    pg --> api : approved
+    api -> kafka[Kafka]{shape: queue} : order.paid
+    api --> user : 201
+  else declined
+    pg -x api : declined
+    api --> user : 402
+  end
+else sold out
+  redis -x api : sold out
+  api --> user : 409
+end

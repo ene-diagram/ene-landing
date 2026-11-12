@@ -1,0 +1,10 @@
+title Order saga with compensation
+orch[Orchestrator] -> order[Orders] : create order
+order --> orch : created
+orch -> stock[Inventory] : reserve stock
+stock --> orch : reserved
+orch -> pay[Payments] : charge
+pay -x orch : limit exceeded
+orch -> stock : release stock (compensate)
+& orch -> order : cancel order (compensate)
+stock --> orch : released

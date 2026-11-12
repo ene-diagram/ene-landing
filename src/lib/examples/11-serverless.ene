@@ -1,0 +1,10 @@
+title Serverless order processing (icons)
+user[User]{icon: logos:chrome} -> cdn[CloudFront]{icon: logos:aws-cloudfront} : GET /
+cdn -> gw[API Gateway]{icon: logos:aws-api-gateway} : POST /orders
+gw -> fn[Order Lambda]{icon: logos:aws-lambda} : invoke
+fn -> db[DynamoDB]{icon: logos:aws-dynamodb} : PutItem
+& fn -> q[SQS]{icon: logos:aws-sqs} : order event
+db --> fn : OK
+q -> bq[BigQuery]{icon: logos:google-cloud} : load analytics @2s
+fn --> gw : 201
+gw --> user : 201 Created

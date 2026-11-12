@@ -1,0 +1,10 @@
+title Payment retry
+order[Order Service] -> pg[Payment Gateway] : authorize
+pg -x order : timeout
+wait 1
+order -> pg : authorize (retry 1)
+pg -x order : 503
+wait 2
+order -> pg : authorize (retry 2)
+pg --> order : approved
+order -> ledger[Ledger] : record payment

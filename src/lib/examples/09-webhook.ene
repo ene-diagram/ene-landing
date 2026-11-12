@@ -1,0 +1,11 @@
+title Webhook delivery and retry
+stripe[Payment Provider] -> hook[Webhook Receiver] : payment.succeeded
+hook -> queue[Queue] : enqueue
+hook --> stripe : 200
+queue -> handler[Handler] : event
+handler -x partner[Partner API] : 500
+wait 0.5
+handler -> queue : schedule retry
+queue -> handler : event (retry)
+handler -> partner : deliver
+partner --> handler : 200

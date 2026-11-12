@@ -1,0 +1,42 @@
+@import "./tokens.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); color-scheme: dark; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+code, kbd, pre { font-family: var(--font-mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-8); }
+.kicker { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-muted); }
+.muted { color: var(--ink-muted); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: var(--space-3) var(--space-5); border-radius: var(--radius-md); font-size: 15px; font-weight: 500; border: 1px solid var(--line); cursor: pointer; background: transparent; color: var(--ink); transition: transform var(--motion-fast) var(--motion-ease), background-color var(--motion-fast), border-color var(--motion-fast); }
+.btn:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+.btn:active { transform: none; }
+.btn-primary { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
+.btn-mono { font-family: var(--font-mono); font-size: 14px; color: var(--ink-muted); font-weight: 400; }
+.ctl { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); background: transparent; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: var(--space-1) var(--space-3); min-height: 32px; cursor: pointer; transition: color var(--motion-fast), border-color var(--motion-fast); }
+.ctl:hover { color: var(--ink); border-color: var(--line-strong); }
+.ic { font-family: var(--font-mono); font-size: 13px; color: var(--ink); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1px 6px; }
+kbd { font-size: 12px; color: var(--ink); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: var(--radius-sm); padding: 2px 7px; }
+
+/* Scroll reveal: content is visible without JS; the action only adds motion. */
+.reveal { transition: opacity 700ms var(--motion-ease), transform 700ms var(--motion-ease); }
+.reveal.pending { opacity: 0; transform: translateY(var(--space-8)); }
+
+/* The ene player, themed with the design-system tokens. */
+.ene-host svg { --bg: transparent; --node: var(--surface-raised); --line: var(--line-strong); --faint: var(--line); --fg: var(--ink); --fg2: var(--ink-muted); --ok: var(--accent-soft); --fail: var(--danger); --reply: var(--accent); max-width: 100%; height: auto; }
+.ene-host .ene-bar { color: var(--ink-muted); font-family: var(--font-mono); font-size: 12px; }
+.ene-host .ene-bar button, .ene-host .ene-bar select { background: var(--surface-raised); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 12px; min-height: 32px; padding: 0 var(--space-3); cursor: pointer; }
+.ene-host .ene-bar button:hover { border-color: var(--line-strong); }
+.ene-host .ene-error { background: var(--surface); border: 1px solid var(--danger); color: var(--danger); border-radius: var(--radius-md); padding: var(--space-4); font-size: 13px; white-space: pre-wrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .reveal.pending { transition: none; opacity: 1; transform: none; }
+  .btn, .ctl { transition: none; }
+}
+@media (max-width: 720px) { .wrap { padding: 0 var(--space-4); } }
