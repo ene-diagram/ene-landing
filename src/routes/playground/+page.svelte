@@ -4,6 +4,7 @@
   import EnePlayer from "#lib/components/EnePlayer.svelte";
   import { m } from "#lib/paraglide/messages";
   import { asset } from "$app/paths";
+  import { decodeShare, encodeShare } from "#lib/share";
 
   let pick = $state("07-payment-retry");
   let text = $state(byId("07")!.source);
@@ -14,15 +15,25 @@
   const lines = $derived(text.split("\n").length);
   const steps = $derived(text.split("\n").filter((l) => /(-x|-->|->)/.test(l)).length);
 
-  function load(slug: string) { const ex = byId(slug); if (ex) { pick = ex.slug; text = ex.source; shown = ex.source; } }
+  function load(slug: string) { const ex = byId(slug); if (ex) { pick = ex.slug; text = ex.source; shown = ex.source; choices = []; } }
   function edit(v: string) { text = v; clearTimeout(timer); timer = setTimeout(() => (shown = text), 350); }
-  function encode(s: string) { return btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
-  function decode(s: string) { const b = atob(s.replace(/-/g, "+").replace(/_/g, "/")); return new TextDecoder().decode(Uint8Array.from(b, (c) => c.charCodeAt(0))); }
-  async function copy(what: "link" | "source") {
-    const v = what === "link" ? `${location.origin}${location.pathname}#src=${encode(text)}` : text;
-    try { await navigator.clipboard.writeText(v); note = what === "link" ? m.playground_link_copied() : m.playground_source_copied(); } catch { note = m.playground_copy_failed(); }
+  // Branch arms picked in the player; saved in share links and used for the next render
+  let choices: number[] = $state([]);
+  let embed = $state(false);
+  async function copy(what: "link" | "source" | "embed") {
+    try {
+      const base = `${location.origin}${location.pathname}`;
+      const frag = what === "source" ? "" : await encodeShare(text, choices);
+      const v = what === "link" ? `${base}#${frag}`
+        : what === "embed" ? `<iframe src="${base}?embed#${frag}" title="ene diagram" width="100%" height="480" style="border:0" loading="lazy"></iframe>`
+        : text;
+      await navigator.clipboard.writeText(v);
+      note = what === "link" ? m.playground_link_copied() : what === "embed" ? m.playground_embed_copied() : m.playground_source_copied();
+    } catch { note = m.playground_copy_failed(); }
     setTimeout(() => (note = ""), 1800);
   }
+  /** The full playground for the diagram shown in the embed view */
+  let openHref = $state("");
   // ---- download ----
   type Format = "svg" | "gif" | "mp4" | "webm";
   let player: EnePlayerApi | undefined = $state();
@@ -79,14 +90,28 @@
 
   onMount(() => {
     void loadExporter().then((ex) => ex.videoSupport()).then((v) => (video = v)).catch(() => {});
+    embed = document.documentElement.classList.contains("embed");
     const h = location.hash.slice(1);
-    if (h.startsWith("src=")) { try { text = shown = decode(h.slice(4)); pick = ""; } catch { /* keep default */ } }
-    else if (h) load(h);
+    if (/^(z|src)=/.test(h)) {
+      decodeShare(h).then((s) => {
+        if (!s) return;
+        choices = s.choices; text = shown = s.source; pick = "";
+        openHref = `${location.origin}${location.pathname}#${h}`;
+      }).catch(() => { note = m.playground_link_broken(); });
+    } else if (h) { load(h); openHref = `${location.origin}${location.pathname}#${h}`; }
+    else openHref = `${location.origin}${location.pathname}`;
   });
 </script>
 
 <svelte:head><title>{m.playground_title()}</title></svelte:head>
 
+{#if embed}
+<div class="embed-view">
+  <EnePlayer source={shown} label={m.playground_preview_label()} {choices} />
+  <a class="open" href={openHref} target="_blank" rel="noopener">{m.playground_open_full()}</a>
+  {#if note}<p class="note" role="status">{note}</p>{/if}
+</div>
+{:else}
 <div class="pg">
   <section class="editor" aria-label={m.playground_editor()}>
     <div class="bar">
@@ -107,9 +132,10 @@
         <span class="note" role="status">{note}</span>
         <button type="button" class="ctl" onclick={() => copy("source")}>{m.playground_copy_source()}</button>
         <button type="button" class="ctl" onclick={() => copy("link")}>{m.playground_copy_link()}</button>
+        <button type="button" class="ctl" onclick={() => copy("embed")}>{m.playground_copy_embed()}</button>
       </div>
     </div>
-    <div class="stage"><EnePlayer source={shown} label={m.playground_preview_label()} onplayer={(p) => (player = p)} /></div>
+    <div class="stage"><EnePlayer source={shown} label={m.playground_preview_label()} {choices} onchoices={(c) => (choices = c)} onplayer={(p) => (player = p)} /></div>
     <form class="dl" aria-label={m.playground_dl_label()} onsubmit={(e) => { e.preventDefault(); void download(); }}>
       <label>{m.playground_dl_format()}
         <select value={format} onchange={(e) => setFormat((e.currentTarget as HTMLSelectElement).value as Format)} disabled={busy}>
@@ -142,6 +168,7 @@
     <p class="hint muted">{m.playground_dl_hint()}</p>
   </section>
 </div>
+{/if}
 
 <style>
   .pg { display: grid; grid-template-columns: minmax(320px, 480px) minmax(0, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: calc(100vh - 64px); }
@@ -161,6 +188,9 @@
   .dl label { display: flex; align-items: center; gap: var(--space-2); font-size: 12px; color: var(--ink-muted); }
   .dl select { flex: none; }
   .dl input { width: 64px; min-height: 36px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 13px; padding: 0 var(--space-2); }
+  :global(html.embed) .pg { display: none; }
+  .embed-view { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); }
+  .embed-view .open { align-self: flex-end; font-size: 12px; color: var(--ink-muted); }
   .hint { padding: var(--space-4); border-top: 1px solid var(--line); font-size: 13px; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   @media (max-width: 860px) { .pg { grid-template-columns: minmax(0, 1fr); } .editor { border-right: 0; border-bottom: 1px solid var(--line); } textarea { min-height: 320px; } .stage { padding: var(--space-6) var(--space-4); } }

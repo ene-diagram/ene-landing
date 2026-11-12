@@ -129,5 +129,9 @@
   "playground_dl_progress": "Frame {done}/{total}",
   "playground_dl_done": "Downloaded ({size})",
   "playground_dl_failed": "Download failed: {reason}",
-  "playground_dl_hint": "Downloads play the branch arms picked in the player. Everything is encoded in your browser; nothing is uploaded."
+  "playground_dl_hint": "Downloads play the branch arms picked in the player. Everything is encoded in your browser; nothing is uploaded.",
+  "playground_copy_embed": "Copy embed",
+  "playground_embed_copied": "Embed code copied",
+  "playground_link_broken": "This link could not be opened. Showing the default example.",
+  "playground_open_full": "Open in the ene playground ↗"
 }
