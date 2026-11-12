@@ -129,5 +129,9 @@
   "playground_dl_progress": "프레임 {done}/{total}",
   "playground_dl_done": "내려받았어요 ({size})",
   "playground_dl_failed": "내려받지 못했어요: {reason}",
-  "playground_dl_hint": "플레이어에서 고른 갈래대로 재생돼요. 모든 인코딩은 브라우저에서 하고, 아무것도 올리지 않아요."
+  "playground_dl_hint": "플레이어에서 고른 갈래대로 재생돼요. 모든 인코딩은 브라우저에서 하고, 아무것도 올리지 않아요.",
+  "playground_copy_embed": "임베드 복사",
+  "playground_embed_copied": "임베드 코드를 복사했어요",
+  "playground_link_broken": "링크를 열지 못했어요. 기본 예제를 보여 드려요.",
+  "playground_open_full": "ene 플레이그라운드에서 열기 ↗"
 }
