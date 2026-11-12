@@ -19,6 +19,8 @@
     failed = false;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const n = seq;
+    // The previous player is destroyed by render(); nothing may use it while the new one is built
+    onplayer?.(undefined);
     const player = await window.ene.render(host, src, { lang: getLocale(), autoplay: autoplay && !reduce, loop, choices, onChoicesChange: (c) => onchoices?.(c) });
     if (n === seq) onplayer?.(player);
   }
