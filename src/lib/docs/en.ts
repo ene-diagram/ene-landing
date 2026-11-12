@@ -30,6 +30,21 @@ export const docs: Doc[] = [
         { t: "code", file: "terminal", code: "$ ene flow.ene -o flow.svg --no-network\n$ ene flow.ene -o flow.svg --allow-host icons.example.com" },
         { t: "callout", label: "Note", html: "A failed icon never fails the render. The node is drawn without it and the reason is printed to stderr." }] }
     ] },
+  { slug: "blog", group: "Get started", title: "Use in a blog",
+    lede: "Most blogs are Markdown. Where the host allows a script, load the player from a CDN. Where it does not, upload an image.",
+    sections: [
+      { id: "cdn", h: "Load from a CDN", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.1/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
+        { t: "p", html: `The major version is pinned, so fixes arrive without breaking changes. ${ic("https://unpkg.com/@ene-diagram/player@0.1/dist/ene.js")} works the same way.` },
+        { t: "p", html: `${ic("ene.js")} is about 64 KB. The first time it draws a flow diagram it loads ${ic("ene-elk.js")} (about 1.6 MB) from the same folder. Pages with only ${ic("diagram sequence")} diagrams never download it.` }] },
+      { id: "image", h: "Upload an image", blocks: [{ t: "code", file: "terminal", code: "$ ene flow.ene -o flow.svg\n$ ene flow.ene -o flow.gif" },
+        { t: "p", html: "Use the SVG where the host keeps SVG animation, otherwise the GIF." }] },
+      { id: "hosts", h: "Which route fits which host", blocks: [{ t: "table", head: ["Host", "Route", "Status"], rows: [
+        ["Self-built sites (Astro, Next, Hugo, Jekyll)", "CDN script in the layout", "Works in any HTML page"],
+        ["Tistory (skin HTML), self-hosted WordPress", "CDN script", "Untested"],
+        ["velog, Medium, dev.to, Brunch", "GIF upload (SVG upload support unknown)", "Untested"],
+        ["Hosts that accept iframes", "Playground embed view", "Not available yet"]] },
+        { t: "callout", label: "Note", html: "Untested entries have not been checked on the host yet." }] }
+    ] },
   { slug: "syntax", group: "Writing", title: "Syntax",
     lede: "One line is one step, played top to bottom. Everything else is optional.",
     sections: [
