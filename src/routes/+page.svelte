@@ -5,6 +5,7 @@
   import { byId } from "#lib/examples";
   import { reveal } from "#lib/reveal";
   import { m } from "#lib/paraglide/messages";
+  import Seo from "#lib/components/Seo.svelte";
 
   const order = byId("01")!.source;
   const cache = byId("03")!.source;
@@ -17,7 +18,27 @@
   ]);
 </script>
 
-<svelte:head><title>{m.home_title()}</title></svelte:head>
+<Seo
+  title={m.home_title()}
+  description={m.meta_home_description()}
+  type="website"
+  jsonLd={{
+    "@graph": [
+      { "@type": "WebSite", name: "ene", url: `${__SITE_URL__}${__BASE_PATH__}/`, inLanguage: ["en", "ko"] },
+      {
+        "@type": "SoftwareApplication",
+        name: "ene",
+        description: m.meta_home_description(),
+        applicationCategory: "DeveloperApplication",
+        operatingSystem: "Any (Node.js 22+, modern browsers)",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        license: "https://opensource.org/licenses/MIT",
+        downloadUrl: "https://www.npmjs.com/package/@ene-diagram/cli",
+        softwareHelp: `${__SITE_URL__}${__BASE_PATH__}/docs/introduction/`
+      }
+    ]
+  }}
+/>
 
 <header class="hero wrap">
   <a class="badge" href="#embed">{m.home_badge()}</a>

@@ -5,13 +5,29 @@
   import EnePlayer from "#lib/components/EnePlayer.svelte";
   import { reveal } from "#lib/reveal";
   import { m } from "#lib/paraglide/messages";
+  import { getLocale } from "#lib/paraglide/runtime";
+  import Seo from "#lib/components/Seo.svelte";
   let { data } = $props();
   const doc = $derived(data.doc);
   const docs = $derived(getDocs());
   const groups = $derived(getGroups());
+  // Short ledes get a line about ene so the description still says what the page is for
+  const describe = (lede: string) => (lede.length < 90 ? `${lede} ${m.meta_docs_suffix()}` : lede);
+  const plain = (html: string) => html.replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
 </script>
 
-<svelte:head><title>{m.docs_page_title({ title: doc.title })}</title></svelte:head>
+<Seo
+  title={m.docs_page_title({ title: doc.title })}
+  description={describe(plain(doc.lede))}
+  jsonLd={{
+    "@type": "TechArticle",
+    headline: doc.title,
+    description: plain(doc.lede),
+    articleSection: doc.group,
+    inLanguage: getLocale(),
+    isPartOf: { "@type": "WebSite", name: "ene", url: `${__SITE_URL__}${__BASE_PATH__}/` }
+  }}
+/>
 
 <div class="docs wrap">
   <aside class="side" aria-label={m.docs_nav_label()}>

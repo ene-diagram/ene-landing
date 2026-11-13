@@ -10,7 +10,8 @@
     "build": "node scripts/sync-tokens.ts && vite build",
     "preview": "vite preview",
     "i18n": "paraglide-js compile --project ./project.inlang",
-    "check": "pnpm i18n && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && tsc --noEmit -p tsconfig.scripts.json"
+    "check": "pnpm i18n && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && tsc --noEmit -p tsconfig.scripts.json",
+    "og": "node scripts/og.ts"
   },
   "devDependencies": {
     "@inlang/paraglide-js": "^3.2.2",

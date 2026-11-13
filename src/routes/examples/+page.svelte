@@ -3,6 +3,7 @@
   import { getExamples, tagLabels, type Tag } from "#lib/examples";
   import { reveal } from "#lib/reveal";
   import { m } from "#lib/paraglide/messages";
+  import Seo from "#lib/components/Seo.svelte";
   const filters: ("all" | Tag)[] = ["all", "flows", "branches", "failures", "groups", "sequence"];
   const label = (x: "all" | Tag) => (x === "all" ? m.tag_all() : tagLabels[x]());
   let f = $state<"all" | Tag>("all");
@@ -10,7 +11,7 @@
   const shown = $derived(f === "all" ? examples : examples.filter((e) => e.tags.includes(f as Tag)));
 </script>
 
-<svelte:head><title>{m.examples_title()}</title></svelte:head>
+<Seo title={m.examples_title()} description={m.meta_examples_description()} type="website" />
 
 <div class="wrap page">
   <div class="top">

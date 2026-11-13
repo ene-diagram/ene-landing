@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Seo from "#lib/components/Seo.svelte";
   import { onMount } from "svelte";
   import { byId, getExamples } from "#lib/examples";
   import EnePlayer from "#lib/components/EnePlayer.svelte";
@@ -103,7 +104,7 @@
   });
 </script>
 
-<svelte:head><title>{m.playground_title()}</title></svelte:head>
+<Seo title={m.playground_title()} description={m.meta_playground_description()} type="website" />
 
 {#if embed}
 <div class="embed-view">

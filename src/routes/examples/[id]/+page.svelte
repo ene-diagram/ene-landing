@@ -3,11 +3,12 @@
   import Code from "#lib/components/Code.svelte";
   import EnePlayer from "#lib/components/EnePlayer.svelte";
   import { m } from "#lib/paraglide/messages";
+  import Seo from "#lib/components/Seo.svelte";
   let { data } = $props();
   const ex = $derived(data.ex);
 </script>
 
-<svelte:head><title>{m.example_page_title({ title: ex.title })}</title></svelte:head>
+<Seo title={m.example_page_title({ title: ex.title })} description={m.meta_example_description({ blurb: ex.blurb })} />
 
 <div class="wrap page">
   <a class="back" href={href(`/examples/`)}>{m.example_back()}</a>

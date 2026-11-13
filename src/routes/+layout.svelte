@@ -3,7 +3,7 @@
   import "#lib/styles/app.css";
   import { absoluteHref, LOCALE_KEY, sitePath } from "#lib/href";
   import { m } from "#lib/paraglide/messages";
-  import { baseLocale, getLocale, locales } from "#lib/paraglide/runtime";
+  import { baseLocale, getLocale } from "#lib/paraglide/runtime";
   import { onMount } from "svelte";
   import Nav from "#lib/components/Nav.svelte";
   import Footer from "#lib/components/Footer.svelte";
@@ -21,10 +21,11 @@
 </script>
 
 <svelte:head>
-  <meta name="description" content={m.meta_description()} />
-  <link rel="canonical" href={absoluteHref(path, getLocale())} />
-  {#each locales as l}<link rel="alternate" hreflang={l} href={absoluteHref(path, l)} />{/each}
-  <link rel="alternate" hreflang="x-default" href={absoluteHref(path, baseLocale)} />
+  <meta name="theme-color" content="#08090A" />
+  <link rel="icon" href="{__BASE_PATH__}/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="{__BASE_PATH__}/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="{__BASE_PATH__}/apple-touch-icon.png" />
+  <link rel="manifest" href="{__BASE_PATH__}/site.webmanifest" />
 </svelte:head>
 
 <a class="skip" href="#main">{m.skip_to_content()}</a>
