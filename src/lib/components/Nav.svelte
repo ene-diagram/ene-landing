@@ -30,7 +30,7 @@
           <a href={href(path, l)} hreflang={l} lang={l} aria-current={l === getLocale() ? "true" : undefined} data-sveltekit-reload>{localeNames[l]}</a>
         {/each}
       </div>
-      <a class="gh" href="https://github.com/slop-makers/ene">{m.nav_github()}</a>
+      <a class="gh" href="https://github.com/ene-diagram/ene">{m.nav_github()}</a>
       <button type="button" class="menu" aria-label={m.nav_open_menu()} aria-expanded={open} onclick={() => (open = !open)}>
         <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" /></svg>
       </button>
