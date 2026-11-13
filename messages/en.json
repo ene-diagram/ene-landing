@@ -11,7 +11,6 @@
   "nav_open_menu": "Open menu",
   "nav_language": "Language",
   "footer_license": "ene · MIT License",
-
   "home_title": "ene · Diagrams that show what happens",
   "home_badge": "Self-playing SVG export →",
   "home_h1": "Diagrams that show what happens.",
@@ -19,7 +18,6 @@
   "home_get_started": "Get started",
   "home_copy_install": "Copy install command",
   "home_copied": "copied",
-  "home_not_released": "Not released yet. The install command is a placeholder.",
   "home_live_example": "Live example",
   "home_edit_in_playground": "Edit in playground →",
   "home_order_label": "Order request",
@@ -46,7 +44,6 @@
   "home_end_h2": "Your next diagram should move.",
   "home_read_docs": "Read the docs",
   "home_browse_examples": "Browse examples",
-
   "docs_page_title": "{title} · ene docs",
   "docs_nav_label": "Docs navigation",
   "docs_page_kicker": "PAGE",
@@ -55,7 +52,6 @@
   "docs_pn_label": "Previous and next",
   "docs_previous": "← Previous",
   "docs_next": "Next →",
-
   "examples_title": "Examples · ene",
   "examples_kicker": "EXAMPLES",
   "examples_h1": "Fourteen flows to start from.",
@@ -72,7 +68,6 @@
   "example_kicker": "EXAMPLE {id}",
   "example_open_playground": "Open in playground",
   "example_pn_label": "Previous and next example",
-
   "ex_01_title": "Order request",
   "ex_01_blurb": "Parallel calls and a payment timeout.",
   "ex_02_title": "Login and token refresh",
@@ -101,7 +96,6 @@
   "ex_13_blurb": "Groups, shapes and icons.",
   "ex_14_title": "Checkout sequence",
   "ex_14_blurb": "The same kind of flow as a sequence diagram.",
-
   "playground_title": "Playground · ene",
   "playground_editor": "Editor",
   "playground_example": "Example",
@@ -117,10 +111,27 @@
   "playground_link_copied": "Link copied",
   "playground_copy_failed": "Copy failed. Select the text and copy it yourself.",
   "playground_preview_label": "Playground preview",
-  "playground_hint": "To get a self-playing SVG, save the source as a file and run <code class=\"ic\">ene flow.ene -o flow.svg</code>.",
-
   "code_copy": "Copy",
   "code_copied": "Copied",
   "player_default_label": "Diagram",
-  "player_failed": "The player script did not load. The diagram text is shown above."
+  "player_failed": "The player script did not load. The diagram text is shown above.",
+  "playground_dl_label": "Download",
+  "playground_dl_format": "Download",
+  "playground_dl_svg": "Animated SVG",
+  "playground_dl_webm": "WebM (real time)",
+  "playground_dl_scale": "Scale",
+  "playground_dl_theme": "Colours",
+  "playground_dl_theme_auto": "Follow dark mode",
+  "playground_dl_theme_light": "Light",
+  "playground_dl_theme_dark": "Dark",
+  "playground_dl_button": "Download",
+  "playground_dl_cancel": "Cancel",
+  "playground_dl_progress": "Frame {done}/{total}",
+  "playground_dl_done": "Downloaded ({size})",
+  "playground_dl_failed": "Download failed: {reason}",
+  "playground_dl_hint": "Downloads play the branch arms picked in the player. Everything is encoded in your browser; nothing is uploaded.",
+  "playground_copy_embed": "Copy embed",
+  "playground_embed_copied": "Embed code copied",
+  "playground_link_broken": "This link could not be opened. Showing the default example.",
+  "playground_open_full": "Open in the ene playground ↗"
 }

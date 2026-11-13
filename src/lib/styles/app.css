@@ -56,4 +56,6 @@ kbd { font-size: 12px; color: var(--ink); border: 1px solid var(--line); border-
 :root:lang(ko) :is(h3, h4) { letter-spacing: -0.005em !important; }
 /* Korean labels: Hangul in a mono stack looks off, so use the sans stack except for real code. */
 :root:lang(ko) :is(.kicker, .btn-mono, .ctl, .t-label, .ene-host .ene-bar, .ene-host .ene-bar button, .ene-host .ene-bar select) { font-family: "Geist", "Pretendard Variable", Pretendard, system-ui, sans-serif; letter-spacing: 0; }
-:root:lang(ko) :is(.pre, .phead, .emd, .status, .note, .callout span, th, .chip) { font-family: "Geist", "Pretendard Variable", Pretendard, system-ui, sans-serif !important; letter-spacing: 0 !important; }
+:root:lang(ko) :is(.phead, .emd, .status, .note, .callout span, th, .chip) { font-family: "Geist", "Pretendard Variable", Pretendard, system-ui, sans-serif !important; letter-spacing: 0 !important; }
+/* ?embed (playground in an iframe): player only */
+html.embed :is(body > div > header, body > div > footer, .skip) { display: none !important; }

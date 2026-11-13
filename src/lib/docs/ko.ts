@@ -30,6 +30,21 @@ export const docs: Doc[] = [
         { t: "code", file: "terminal", code: "$ ene flow.ene -o flow.svg --no-network\n$ ene flow.ene -o flow.svg --allow-host icons.example.com" },
         { t: "callout", label: "참고", html: "아이콘을 못 불러와도 렌더링은 멈추지 않아요. 그 노드만 아이콘 없이 그려지고, 이유는 stderr에 찍혀요." }] }
     ] },
+  { slug: "blog", group: "시작하기", title: "블로그에서",
+    lede: "블로그는 대부분 마크다운이에요. 스크립트를 넣을 수 있으면 CDN에서 플레이어를 불러오고, 안 되면 이미지를 올리세요.",
+    sections: [
+      { id: "cdn", h: "CDN에서 불러오기", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.1/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
+        { t: "p", html: `메이저 버전을 고정해 두어서 호환이 깨지지 않는 수정만 받아요. ${ic("https://unpkg.com/@ene-diagram/player@0.1/dist/ene.js")}도 똑같이 쓸 수 있어요.` },
+        { t: "p", html: `${ic("ene.js")}는 약 64 KB예요. 흐름 다이어그램을 처음 그릴 때 같은 폴더의 ${ic("ene-elk.js")}(약 1.6 MB)를 불러와요. ${ic("diagram sequence")} 다이어그램만 있는 페이지는 이 파일을 받지 않아요.` }] },
+      { id: "image", h: "이미지 올리기", blocks: [{ t: "code", file: "terminal", code: "$ ene flow.ene -o flow.svg\n$ ene flow.ene -o flow.gif" },
+        { t: "p", html: "SVG 애니메이션이 살아 있는 곳이면 SVG를, 아니면 GIF를 쓰세요." }] },
+      { id: "hosts", h: "플랫폼별 방법", blocks: [{ t: "table", head: ["플랫폼", "방법", "상태"], rows: [
+        ["직접 만든 사이트 (Astro, Next, Hugo, Jekyll)", "레이아웃에 CDN 스크립트", "어느 HTML 페이지에서나 동작"],
+        ["티스토리(스킨 HTML), 설치형 워드프레스", "CDN 스크립트", "확인 전"],
+        ["velog, Medium, dev.to, 브런치", "GIF 업로드 (SVG 업로드 가능 여부 모름)", "확인 전"],
+        ["iframe을 받는 곳", "플레이그라운드 임베드 화면", "아직 없음"]] },
+        { t: "callout", label: "참고", html: "확인 전 항목은 그 플랫폼에서 아직 직접 확인하지 않았어요." }] }
+    ] },
   { slug: "syntax", group: "작성법", title: "문법",
     lede: "한 줄이 한 단계고, 위에서 아래로 재생돼요. 나머지는 다 선택이에요.",
     sections: [

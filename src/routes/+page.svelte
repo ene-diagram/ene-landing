@@ -9,7 +9,7 @@
   const order = byId("01")!.source;
   const cache = byId("03")!.source;
   let copied = $state(false);
-  async function copyInstall() { try { await navigator.clipboard.writeText("npm i ene"); copied = true; setTimeout(() => (copied = false), 1400); } catch { copied = false; } }
+  async function copyInstall() { try { await navigator.clipboard.writeText("npm i @ene-diagram/cli"); copied = true; setTimeout(() => (copied = false), 1400); } catch { copied = false; } }
   const trio = $derived([
     { a: "->", t: m.home_arrow_request(), b: m.home_arrow_request_text() },
     { a: "-->", t: m.home_arrow_response(), b: m.home_arrow_response_text() },
@@ -25,9 +25,8 @@
   <p>{m.home_lede()}</p>
   <div class="ctas">
     <a class="btn btn-primary" href={href(`/docs/introduction/`)}>{m.home_get_started()}</a>
-    <button type="button" class="btn btn-mono" onclick={copyInstall} aria-label={m.home_copy_install()}>$ {copied ? m.home_copied() : "npm i ene"}</button>
+    <button type="button" class="btn btn-mono" onclick={copyInstall} aria-label={m.home_copy_install()}>$ {copied ? m.home_copied() : "npm i @ene-diagram/cli"}</button>
   </div>
-  <p class="pre muted">{m.home_not_released()}</p>
 </header>
 
 <section class="wrap" aria-label={m.home_live_example()}>
@@ -74,7 +73,7 @@
 </section>
 
 <style>
-  .hero { position: relative; padding-top: var(--space-30); padding-bottom: var(--space-18); display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-6); }
+  .hero { position: relative; overflow-x: clip; padding-top: var(--space-30); padding-bottom: var(--space-18); display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-6); }
   .hero::before { content: ""; position: absolute; inset: 0 0 auto 50%; width: 900px; height: 600px; transform: translateX(-50%); background: radial-gradient(50% 50% at 50% 40%, rgba(124,140,255,.12), rgba(124,140,255,0) 70%); pointer-events: none; z-index: -1; animation: drift 12s var(--motion-ease) infinite alternate; }
   @keyframes drift { to { transform: translateX(-46%) translateY(24px); } }
   .badge { font-size: 13px; color: var(--accent-soft); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: var(--space-1) var(--space-4); transition: border-color var(--motion-fast); }
@@ -82,7 +81,6 @@
   h1 { font-size: 80px; line-height: 80px; letter-spacing: -0.045em; font-weight: 600; max-width: 880px; animation: rise 900ms var(--motion-ease) both; }
   .hero > p:not(.pre) { font-size: 19px; line-height: 29px; color: var(--ink-muted); max-width: 560px; animation: rise 900ms 120ms var(--motion-ease) both; }
   .ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; animation: rise 900ms 220ms var(--motion-ease) both; }
-  .pre { font-size: 12px; font-family: var(--font-mono); }
   @keyframes rise { from { opacity: 0; transform: translateY(var(--space-4)); } }
 
   .player { border: 1px solid var(--line); border-radius: var(--radius-xl); background: var(--surface); overflow: hidden; animation: rise 1000ms 320ms var(--motion-ease) both; }

@@ -1,6 +1,6 @@
 # ene-landing
 
-The landing page, docs, examples and playground for [ene](https://github.com/slop-makers/ene), built with SvelteKit as a fully static site.
+The landing page, docs, examples and playground for [ene](https://github.com/ene-diagram/ene), built with SvelteKit as a fully static site.
 
 ## Develop
 
@@ -44,7 +44,7 @@ To change a token: edit it in the design system, copy its `tokens.json` over `de
 
 ## Updating the player
 
-`pnpm sync:player` copies `demo/ene.js`, `demo/ene-elk.js` and `demo/logos-subset.js` from a sibling checkout of `slop-makers/ene` (or `ENE_DIR=...`). Examples are copied from `packages/core/examples`.
+`pnpm sync:player` copies `demo/ene.js`, `demo/ene-elk.js` and `demo/logos-subset.js` from a sibling checkout of `ene-diagram/ene` (or `ENE_DIR=...`). Examples are copied from `packages/core/examples`.
 
 ## Toolchain
 
