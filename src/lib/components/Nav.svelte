@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { href, sitePath } from "#lib/href";
+  import { href, LOCALE_KEY, sitePath } from "#lib/href";
   import { localeNames } from "#lib/i18n";
   import { m } from "#lib/paraglide/messages";
   import { getLocale, locales } from "#lib/paraglide/runtime";
@@ -13,6 +13,11 @@
     { href: "/playground", label: m.nav_playground(), match: "/playground" }
   ]);
   const path = $derived(sitePath(page.url.pathname));
+  // Keep the #hash (the playground stores its diagram there) and remember the choice
+  function pick(ev: MouseEvent, l: string) {
+    try { localStorage.setItem(LOCALE_KEY, l); } catch {}
+    if (location.hash) (ev.currentTarget as HTMLAnchorElement).hash = location.hash;
+  }
   const current = (m: string) => page.url.pathname.includes(m) && !(m === "/docs" && page.url.pathname.includes("/docs/syntax"));
 </script>
 
@@ -27,7 +32,7 @@
     <div class="right">
       <div class="lang" role="group" aria-label={m.nav_language()}>
         {#each locales as l}
-          <a href={href(path, l)} hreflang={l} lang={l} aria-current={l === getLocale() ? "true" : undefined} data-sveltekit-reload>{localeNames[l]}</a>
+          <a href={href(path, l)} hreflang={l} lang={l} aria-current={l === getLocale() ? "true" : undefined} data-sveltekit-reload onclick={(ev) => pick(ev, l)}>{localeNames[l]}</a>
         {/each}
       </div>
       <a class="gh" href="https://github.com/ene-diagram/ene">{m.nav_github()}</a>
