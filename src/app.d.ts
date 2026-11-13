@@ -1,6 +1,8 @@
 declare global {
   /** Deploy base path from BASE_PATH, injected by vite.config.ts. */
   const __BASE_PATH__: string;
+  /** Public origin without trailing slash (SITE_URL), injected by vite.config.ts. */
+  const __SITE_URL__: string;
   interface Window {
     ene?: {
       render(el: HTMLElement, source: string, opts?: EneRenderOptions): Promise<EnePlayerApi | undefined>;
