@@ -3,3 +3,4 @@ node_modules
 build
 .DS_Store
 project.inlang/cache
+.vercel
