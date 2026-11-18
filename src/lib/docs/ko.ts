@@ -1,6 +1,6 @@
 import { ic, kbd, type Block, type Doc } from "#lib/docs/shared";
 
-const status: Block = { t: "callout", label: "상태", tone: "danger", html: "ene는 아직 출시 전이에요. 설치 방법은 첫 릴리스 때 여기에 올릴게요." };
+const status: Block = { t: "code", file: "terminal", code: "$ npm i -g @ene-diagram/cli\n$ ene flow.ene -o flow.svg" };
 
 export const docs: Doc[] = [
   { slug: "introduction", group: "시작하기", title: "소개",
@@ -8,10 +8,11 @@ export const docs: Doc[] = [
     sections: [
       { id: "how", h: "동작 방식", blocks: [{ t: "p", html: "단계를 한 줄에 하나씩 텍스트로 적으세요. ene가 읽어서 노드를 배치하고 단계를 차례로 재생해요. 점이 화살표를 하나씩 따라가요." },
         { t: "player", label: "주문 요청", code: "title Order request\nuser[User] -> api[API Server] : POST /order\napi -> cache[Redis] : check stock\ncache --> api : miss\napi -> db[MySQL] : SELECT stock & api -> pay[Payment] : charge\ndb --> api : in stock\npay -x api : timeout\napi --> user : 502 retry later" }] },
-      { id: "ways", h: "쓰는 방법 두 가지", blocks: [{ t: "cards", items: [
+      { id: "ways", h: "쓰는 방법 세 가지", blocks: [{ t: "cards", items: [
         { href: "/docs/web-page", title: "웹 페이지에서", code: '<pre class="ene">', text: "재생, 일시정지, 단계 이동, 속도 조절까지 되는 라이브 플레이어." },
-        { href: "/docs/image", title: "이미지로", code: "ene flow.ene -o flow.svg", text: "README와 문서에 바로 넣는, 혼자 재생되는 SVG." }] }] },
-      { id: "status", h: "상태", blocks: [status] }
+        { href: "/docs/image", title: "이미지로", code: "ene flow.ene -o flow.svg", text: "README와 문서에 바로 넣는, 혼자 재생되는 SVG." },
+        { href: "/docs/frameworks", title: "React, Vue, Svelte 에서", code: "<EneDiagram source={…} />", text: "React, Vue, Svelte, Solid, Angular, 그 밖의 프레임워크용 컴포넌트." }] }] },
+      { id: "install", h: "설치", blocks: [status] }
     ] },
   { slug: "web-page", group: "시작하기", title: "웹 페이지에서",
     lede: `다이어그램을 ${ic("&lt;pre class=\"ene\"&gt;")} 안에 넣고 스크립트 하나만 불러오세요. 블록이 전부 플레이어로 바뀌어요.`,
@@ -20,6 +21,19 @@ export const docs: Doc[] = [
         { t: "p", html: "스크립트가 로드되면 이 클래스가 붙은 블록을 모두 찾아 파싱하고 배치한 다음 플레이어로 바꿔요. 텍스트는 HTML에 그대로 남으니 JavaScript가 꺼져 있어도 읽을 수 있어요." }] },
       { id: "result", h: "결과", blocks: [{ t: "player", label: "최소 예제", code: "user -> api : GET /\napi --> user : 200" }] },
       { id: "keyboard", h: "키보드", blocks: [{ t: "p", html: `플레이어를 클릭한 다음 ${kbd("Space")}로 재생·일시정지하고 ${kbd("←")}와 ${kbd("→")}로 이전·다음 단계로 넘어가세요.` }] }
+    ] },
+  { slug: "frameworks", group: "시작하기", title: "React, Vue, Svelte 에서",
+    lede: "프레임워크마다 패키지가 하나씩 있어요. 모두 플레이어를 감싼 얇은 컴포넌트이고 옵션도 같아요.",
+    sections: [
+      { id: "packages", h: "패키지", blocks: [{ t: "table", head: ["프레임워크", "패키지"], mono: [1], rows: [["React 18+, Next.js", "@ene-diagram/react"], ["Vue 3, Nuxt", "@ene-diagram/vue"], ["Svelte 5, SvelteKit", "@ene-diagram/svelte"], ["SolidJS 1.8+ 와 2", "@ene-diagram/solid"], ["Angular 17+", "@ene-diagram/angular"], ["그 밖의 프레임워크 (웹 컴포넌트)", "@ene-diagram/element"]] }, { t: "code", file: "terminal", code: "$ npm i @ene-diagram/react" }] },
+      { id: "react", h: "React", blocks: [{ t: "code", file: "App.jsx", code: "import { EneDiagram } from \"@ene-diagram/react\";\n\n<EneDiagram source={source} onChoicesChange={(c) => console.log(c)} />" }] },
+      { id: "vue", h: "Vue", blocks: [{ t: "code", file: "App.vue", code: "<script setup>\nimport { EneDiagram } from \"@ene-diagram/vue\";\n</script>\n\n<template>\n  <EneDiagram :source=\"source\" @choices-change=\"(c) => console.log(c)\" />\n</template>" }] },
+      { id: "svelte", h: "Svelte", blocks: [{ t: "code", file: "App.svelte", code: "<script>\n  import { EneDiagram } from \"@ene-diagram/svelte\";\n</script>\n\n<EneDiagram {source} onchoiceschange={(c) => console.log(c)} />" }] },
+      { id: "solid", h: "Solid", blocks: [{ t: "code", file: "App.jsx", code: "import { EneDiagram } from \"@ene-diagram/solid\";\n\n<EneDiagram source={source()} onChoicesChange={(c) => console.log(c)} />" }] },
+      { id: "angular", h: "Angular", blocks: [{ t: "code", file: "checkout.component.ts", code: "@Component({\n  imports: [EneDiagramComponent],\n  template: `<ene-diagram [source]=\"source\" (choicesChange)=\"log($event)\" />`,\n})" }] },
+      { id: "web-component", h: "웹 컴포넌트", blocks: [{ t: "code", file: "index.html", code: "<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/element@0.2/dist/ene-element.js\"></script>\n\n<ene-diagram autoplay=\"false\">\nuser -> api : POST /order\napi --> user : 201\n</ene-diagram>" }] },
+      { id: "options", h: "옵션", blocks: [{ t: "p", html: `플레이어와 같아요: ${ic("lang")}, ${ic("autoplay")}, ${ic("loop")}, ${ic("focus")}, ${ic("theme")}, ${ic("choices")}, ${ic("include")}. 준비 이벤트로 플레이어를 받고, 갈래 이벤트로 보는 사람이 고른 갈래를 받아요.` },
+        { t: "list", items: ["소스가 바뀌면 다시 그려요. 갈래만 바뀌면 다시 만들지 않고 갈래만 바꿔요.", "choices 를 주지 않으면 보는 사람이 고른 갈래가 소스가 바뀌어도 유지돼요.", `서버 렌더링 때와 플레이어가 준비되기 전에는 소스를 ${ic("&lt;pre class=\"ene-source\"&gt;")} 에 텍스트로 보여 줘요.`, `흐름 다이어그램은 번들러가 ${ic("elkjs")} 패키지에서 ELK 를 가져와요. ${ic("ene-elk.js")} 를 따로 올릴 필요가 없어요.`] }] }
     ] },
   { slug: "image", group: "시작하기", title: "이미지로",
     lede: "다이어그램을 혼자 재생되는 SVG로 뽑아요. 이미지가 들어가는 곳이면 어디든 넣을 수 있어요.",
@@ -33,8 +47,8 @@ export const docs: Doc[] = [
   { slug: "blog", group: "시작하기", title: "블로그에서",
     lede: "블로그는 대부분 마크다운이에요. 스크립트를 넣을 수 있으면 CDN에서 플레이어를 불러오고, 안 되면 이미지를 올리세요.",
     sections: [
-      { id: "cdn", h: "CDN에서 불러오기", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.1/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
-        { t: "p", html: `메이저 버전을 고정해 두어서 호환이 깨지지 않는 수정만 받아요. ${ic("https://unpkg.com/@ene-diagram/player@0.1/dist/ene.js")}도 똑같이 쓸 수 있어요.` },
+      { id: "cdn", h: "CDN에서 불러오기", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.2/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
+        { t: "p", html: `메이저 버전을 고정해 두어서 호환이 깨지지 않는 수정만 받아요. ${ic("https://unpkg.com/@ene-diagram/player@0.2/dist/ene.js")}도 똑같이 쓸 수 있어요.` },
         { t: "p", html: `${ic("ene.js")}는 약 64 KB예요. 흐름 다이어그램을 처음 그릴 때 같은 폴더의 ${ic("ene-elk.js")}(약 1.6 MB)를 불러와요. ${ic("diagram sequence")} 다이어그램만 있는 페이지는 이 파일을 받지 않아요.` }] },
       { id: "image", h: "이미지 올리기", blocks: [{ t: "code", file: "terminal", code: "$ ene flow.ene -o flow.svg\n$ ene flow.ene -o flow.gif" },
         { t: "p", html: "SVG 애니메이션이 살아 있는 곳이면 SVG를, 아니면 GIF를 쓰세요." }] },
