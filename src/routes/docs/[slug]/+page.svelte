@@ -114,6 +114,7 @@
   .stats strong { font-size: 32px; font-weight: 600; letter-spacing: -0.03em; } .stats span { font-size: 13px; color: var(--ink-muted); }
   .cards, .pn { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
   .pn { margin-top: var(--space-10); }
+  .cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
   .card { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); transition: border-color var(--motion-fast), transform var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast); }
   .card:hover { border-color: var(--line-strong); transform: translateY(-2px); box-shadow: 0 24px 48px -24px rgba(124,140,255,.25); }
   .card span { font-size: 12px; color: var(--ink-muted); } .card strong { font-size: 16px; font-weight: 500; } .card code { font-size: 13px; color: var(--accent-soft); }

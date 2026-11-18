@@ -1,6 +1,6 @@
 import { ic, kbd, type Block, type Doc } from "#lib/docs/shared";
 
-const status: Block = { t: "callout", label: "Status", tone: "danger", html: "ene has not been released yet. Install instructions will appear here with the first release." };
+const status: Block = { t: "code", file: "terminal", code: "$ npm i -g @ene-diagram/cli\n$ ene flow.ene -o flow.svg" };
 
 export const docs: Doc[] = [
   { slug: "introduction", group: "Get started", title: "Introduction",
@@ -8,10 +8,11 @@ export const docs: Doc[] = [
     sections: [
       { id: "how", h: "How it works", blocks: [{ t: "p", html: "You write steps as plain text, one per line. ene parses them, lays out the nodes and plays the steps in order: a dot travels each arrow." },
         { t: "player", label: "Order request", code: "title Order request\nuser[User] -> api[API Server] : POST /order\napi -> cache[Redis] : check stock\ncache --> api : miss\napi -> db[MySQL] : SELECT stock & api -> pay[Payment] : charge\ndb --> api : in stock\npay -x api : timeout\napi --> user : 502 retry later" }] },
-      { id: "ways", h: "Two ways to use it", blocks: [{ t: "cards", items: [
+      { id: "ways", h: "Three ways to use it", blocks: [{ t: "cards", items: [
         { href: "/docs/web-page", title: "In a web page", code: '<pre class="ene">', text: "A live player with play, pause, step and speed." },
-        { href: "/docs/image", title: "As an image", code: "ene flow.ene -o flow.svg", text: "A self-playing SVG for READMEs and docs." }] }] },
-      { id: "status", h: "Status", blocks: [status] }
+        { href: "/docs/image", title: "As an image", code: "ene flow.ene -o flow.svg", text: "A self-playing SVG for READMEs and docs." },
+        { href: "/docs/frameworks", title: "In React, Vue, Svelte", code: "<EneDiagram source={…} />", text: "A component for React, Vue, Svelte, Solid, Angular or any framework." }] }] },
+      { id: "install", h: "Install", blocks: [status] }
     ] },
   { slug: "web-page", group: "Get started", title: "In a web page",
     lede: `Put your diagram in a ${ic("&lt;pre class=\"ene\"&gt;")} and load one script. Every block becomes a player.`,
@@ -20,6 +21,19 @@ export const docs: Doc[] = [
         { t: "p", html: "The script finds every block with the class on load, parses it, lays it out and replaces it with a player. The text stays in your HTML, so it is readable without JavaScript." }] },
       { id: "result", h: "What you get", blocks: [{ t: "player", label: "Minimal example", code: "user -> api : GET /\napi --> user : 200" }] },
       { id: "keyboard", h: "Keyboard", blocks: [{ t: "p", html: `Click a player to focus it. ${kbd("Space")} plays or pauses. ${kbd("←")} and ${kbd("→")} step backward and forward.` }] }
+    ] },
+  { slug: "frameworks", group: "Get started", title: "In React, Vue, Svelte",
+    lede: "One package per framework. Each is a thin component over the player, with the same options.",
+    sections: [
+      { id: "packages", h: "Packages", blocks: [{ t: "table", head: ["Framework", "Package"], mono: [1], rows: [["React 18+, Next.js", "@ene-diagram/react"], ["Vue 3, Nuxt", "@ene-diagram/vue"], ["Svelte 5, SvelteKit", "@ene-diagram/svelte"], ["SolidJS 1.8+ and 2", "@ene-diagram/solid"], ["Angular 17+", "@ene-diagram/angular"], ["Any other (Web Component)", "@ene-diagram/element"]] }, { t: "code", file: "terminal", code: "$ npm i @ene-diagram/react" }] },
+      { id: "react", h: "React", blocks: [{ t: "code", file: "App.jsx", code: "import { EneDiagram } from \"@ene-diagram/react\";\n\n<EneDiagram source={source} onChoicesChange={(c) => console.log(c)} />" }] },
+      { id: "vue", h: "Vue", blocks: [{ t: "code", file: "App.vue", code: "<script setup>\nimport { EneDiagram } from \"@ene-diagram/vue\";\n</script>\n\n<template>\n  <EneDiagram :source=\"source\" @choices-change=\"(c) => console.log(c)\" />\n</template>" }] },
+      { id: "svelte", h: "Svelte", blocks: [{ t: "code", file: "App.svelte", code: "<script>\n  import { EneDiagram } from \"@ene-diagram/svelte\";\n</script>\n\n<EneDiagram {source} onchoiceschange={(c) => console.log(c)} />" }] },
+      { id: "solid", h: "Solid", blocks: [{ t: "code", file: "App.jsx", code: "import { EneDiagram } from \"@ene-diagram/solid\";\n\n<EneDiagram source={source()} onChoicesChange={(c) => console.log(c)} />" }] },
+      { id: "angular", h: "Angular", blocks: [{ t: "code", file: "checkout.component.ts", code: "@Component({\n  imports: [EneDiagramComponent],\n  template: `<ene-diagram [source]=\"source\" (choicesChange)=\"log($event)\" />`,\n})" }] },
+      { id: "web-component", h: "Web Component", blocks: [{ t: "code", file: "index.html", code: "<script type=\"module\">import \"@ene-diagram/element\";</script>\n\n<ene-diagram autoplay=\"false\">\nuser -> api : POST /order\napi --> user : 201\n</ene-diagram>" }] },
+      { id: "options", h: "Options", blocks: [{ t: "p", html: `${ic("lang")}, ${ic("autoplay")}, ${ic("loop")}, ${ic("focus")}, ${ic("theme")}, ${ic("choices")} and ${ic("include")}, like the player. A ready event gives you the player; a choices event tells you which arm the viewer picked.` },
+        { t: "list", items: ["Changing the source renders again. Changing only the choices picks other arms without rebuilding.", "Without choices, the arms the viewer picked are kept when the source changes.", `On the server and until the player is ready, the source shows as text in ${ic("&lt;pre class=\"ene-source\"&gt;")}.`, `Flow diagrams take ELK from the ${ic("elkjs")} package through your bundler. There is no ${ic("ene-elk.js")} to host.`] }] }
     ] },
   { slug: "image", group: "Get started", title: "As an image",
     lede: "Render a diagram to an SVG that plays by itself. Put it anywhere an image goes.",
