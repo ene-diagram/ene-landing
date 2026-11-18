@@ -31,7 +31,7 @@ export const docs: Doc[] = [
       { id: "svelte", h: "Svelte", blocks: [{ t: "code", file: "App.svelte", code: "<script>\n  import { EneDiagram } from \"@ene-diagram/svelte\";\n</script>\n\n<EneDiagram {source} onchoiceschange={(c) => console.log(c)} />" }] },
       { id: "solid", h: "Solid", blocks: [{ t: "code", file: "App.jsx", code: "import { EneDiagram } from \"@ene-diagram/solid\";\n\n<EneDiagram source={source()} onChoicesChange={(c) => console.log(c)} />" }] },
       { id: "angular", h: "Angular", blocks: [{ t: "code", file: "checkout.component.ts", code: "@Component({\n  imports: [EneDiagramComponent],\n  template: `<ene-diagram [source]=\"source\" (choicesChange)=\"log($event)\" />`,\n})" }] },
-      { id: "web-component", h: "웹 컴포넌트", blocks: [{ t: "code", file: "index.html", code: "<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/element@0/dist/ene-element.js\"></script>\n\n<ene-diagram autoplay=\"false\">\nuser -> api : POST /order\napi --> user : 201\n</ene-diagram>" }] },
+      { id: "web-component", h: "웹 컴포넌트", blocks: [{ t: "code", file: "index.html", code: "<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/element@0.2/dist/ene-element.js\"></script>\n\n<ene-diagram autoplay=\"false\">\nuser -> api : POST /order\napi --> user : 201\n</ene-diagram>" }] },
       { id: "options", h: "옵션", blocks: [{ t: "p", html: `플레이어와 같아요: ${ic("lang")}, ${ic("autoplay")}, ${ic("loop")}, ${ic("focus")}, ${ic("theme")}, ${ic("choices")}, ${ic("include")}. 준비 이벤트로 플레이어를 받고, 갈래 이벤트로 보는 사람이 고른 갈래를 받아요.` },
         { t: "list", items: ["소스가 바뀌면 다시 그려요. 갈래만 바뀌면 다시 만들지 않고 갈래만 바꿔요.", "choices 를 주지 않으면 보는 사람이 고른 갈래가 소스가 바뀌어도 유지돼요.", `서버 렌더링 때와 플레이어가 준비되기 전에는 소스를 ${ic("&lt;pre class=\"ene-source\"&gt;")} 에 텍스트로 보여 줘요.`, `흐름 다이어그램은 번들러가 ${ic("elkjs")} 패키지에서 ELK 를 가져와요. ${ic("ene-elk.js")} 를 따로 올릴 필요가 없어요.`] }] }
     ] },
@@ -47,8 +47,8 @@ export const docs: Doc[] = [
   { slug: "blog", group: "시작하기", title: "블로그에서",
     lede: "블로그는 대부분 마크다운이에요. 스크립트를 넣을 수 있으면 CDN에서 플레이어를 불러오고, 안 되면 이미지를 올리세요.",
     sections: [
-      { id: "cdn", h: "CDN에서 불러오기", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.1/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
-        { t: "p", html: `메이저 버전을 고정해 두어서 호환이 깨지지 않는 수정만 받아요. ${ic("https://unpkg.com/@ene-diagram/player@0.1/dist/ene.js")}도 똑같이 쓸 수 있어요.` },
+      { id: "cdn", h: "CDN에서 불러오기", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.2/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
+        { t: "p", html: `메이저 버전을 고정해 두어서 호환이 깨지지 않는 수정만 받아요. ${ic("https://unpkg.com/@ene-diagram/player@0.2/dist/ene.js")}도 똑같이 쓸 수 있어요.` },
         { t: "p", html: `${ic("ene.js")}는 약 64 KB예요. 흐름 다이어그램을 처음 그릴 때 같은 폴더의 ${ic("ene-elk.js")}(약 1.6 MB)를 불러와요. ${ic("diagram sequence")} 다이어그램만 있는 페이지는 이 파일을 받지 않아요.` }] },
       { id: "image", h: "이미지 올리기", blocks: [{ t: "code", file: "terminal", code: "$ ene flow.ene -o flow.svg\n$ ene flow.ene -o flow.gif" },
         { t: "p", html: "SVG 애니메이션이 살아 있는 곳이면 SVG를, 아니면 GIF를 쓰세요." }] },

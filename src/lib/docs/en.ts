@@ -31,7 +31,7 @@ export const docs: Doc[] = [
       { id: "svelte", h: "Svelte", blocks: [{ t: "code", file: "App.svelte", code: "<script>\n  import { EneDiagram } from \"@ene-diagram/svelte\";\n</script>\n\n<EneDiagram {source} onchoiceschange={(c) => console.log(c)} />" }] },
       { id: "solid", h: "Solid", blocks: [{ t: "code", file: "App.jsx", code: "import { EneDiagram } from \"@ene-diagram/solid\";\n\n<EneDiagram source={source()} onChoicesChange={(c) => console.log(c)} />" }] },
       { id: "angular", h: "Angular", blocks: [{ t: "code", file: "checkout.component.ts", code: "@Component({\n  imports: [EneDiagramComponent],\n  template: `<ene-diagram [source]=\"source\" (choicesChange)=\"log($event)\" />`,\n})" }] },
-      { id: "web-component", h: "Web Component", blocks: [{ t: "code", file: "index.html", code: "<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/element@0/dist/ene-element.js\"></script>\n\n<ene-diagram autoplay=\"false\">\nuser -> api : POST /order\napi --> user : 201\n</ene-diagram>" }] },
+      { id: "web-component", h: "Web Component", blocks: [{ t: "code", file: "index.html", code: "<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/element@0.2/dist/ene-element.js\"></script>\n\n<ene-diagram autoplay=\"false\">\nuser -> api : POST /order\napi --> user : 201\n</ene-diagram>" }] },
       { id: "options", h: "Options", blocks: [{ t: "p", html: `${ic("lang")}, ${ic("autoplay")}, ${ic("loop")}, ${ic("focus")}, ${ic("theme")}, ${ic("choices")} and ${ic("include")}, like the player. A ready event gives you the player; a choices event tells you which arm the viewer picked.` },
         { t: "list", items: ["Changing the source renders again. Changing only the choices picks other arms without rebuilding.", "Without choices, the arms the viewer picked are kept when the source changes.", `On the server and until the player is ready, the source shows as text in ${ic("&lt;pre class=\"ene-source\"&gt;")}.`, `Flow diagrams take ELK from the ${ic("elkjs")} package through your bundler. There is no ${ic("ene-elk.js")} to host.`] }] }
     ] },
@@ -47,8 +47,8 @@ export const docs: Doc[] = [
   { slug: "blog", group: "Get started", title: "Use in a blog",
     lede: "Most blogs are Markdown. Where the host allows a script, load the player from a CDN. Where it does not, upload an image.",
     sections: [
-      { id: "cdn", h: "Load from a CDN", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.1/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
-        { t: "p", html: `The major version is pinned, so fixes arrive without breaking changes. ${ic("https://unpkg.com/@ene-diagram/player@0.1/dist/ene.js")} works the same way.` },
+      { id: "cdn", h: "Load from a CDN", blocks: [{ t: "code", file: "post.html", code: "<script src=\"https://cdn.jsdelivr.net/npm/@ene-diagram/player@0.2/dist/ene.js\"></script>\n<pre class=\"ene\">\nuser -> api : POST /order\napi --> user : 201\n</pre>" },
+        { t: "p", html: `The major version is pinned, so fixes arrive without breaking changes. ${ic("https://unpkg.com/@ene-diagram/player@0.2/dist/ene.js")} works the same way.` },
         { t: "p", html: `${ic("ene.js")} is about 64 KB. The first time it draws a flow diagram it loads ${ic("ene-elk.js")} (about 1.6 MB) from the same folder. Pages with only ${ic("diagram sequence")} diagrams never download it.` }] },
       { id: "image", h: "Upload an image", blocks: [{ t: "code", file: "terminal", code: "$ ene flow.ene -o flow.svg\n$ ene flow.ene -o flow.gif" },
         { t: "p", html: "Use the SVG where the host keeps SVG animation, otherwise the GIF." }] },
